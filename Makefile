@@ -1,8 +1,20 @@
+#*******************************************************************************#
+#									MINISHELL									#
+#*******************************************************************************#
+
+#-------------------------------------------------------------------------------#
+#	Settings																	#
+#-------------------------------------------------------------------------------#
+
 NAME := minishell
 
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -g
 CPPFLAGS := -Iinclude
+
+#-------------------------------------------------------------------------------#
+#	Directories & files															#
+#-------------------------------------------------------------------------------#
 
 SRCDIR := src
 OBJDIR := obj
@@ -13,27 +25,30 @@ LIBFT := $(LIBFT_DIR)/libft.a
 SRCS := $(shell find $(SRCDIR) -name '*.c')
 OBJS := $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
+#-------------------------------------------------------------------------------#
+#	Rules																		#
+#-------------------------------------------------------------------------------#
+
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -lm -o $@
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -lm -o $@
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJDIR)
-	$(MAKE) -C $(LIBFT_DIR) clean
+	@rm -rf $(OBJDIR)
+	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
 .PHONY: all clean fclean re
-

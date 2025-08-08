@@ -1,0 +1,26 @@
+#include "../../include/minishell.h"
+
+void	ft_close_pipefd(t_mini *shell)
+{
+	close_fd(shell->pipe_fd[shell->i_p][1]);
+	close_fd(shell->pipe_fd[shell->i_p][0]);
+	close_fd(shell->fileout);
+}
+
+void	ft_close_pipefd_bis(t_mini *shell, int pipefd[2])
+{
+	close_fd(pipefd[0]);
+	close_fd(pipefd[1]);
+	close_fd(shell->og_stdin);
+	close_fd(shell->og_stdout);
+}
+
+void	ft_close_pipe_ter(t_mini *shell)
+{
+	close_fd(shell->filein);
+	close_fd(shell->fileout);
+	dup2(shell->og_stdin, STDIN_FILENO);
+	dup2(shell->og_stdout, STDOUT_FILENO);
+	shell->filein = -1;
+	shell->fileout = -1;
+}

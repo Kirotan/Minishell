@@ -1,0 +1,29 @@
+#include "libft.h"
+
+size_t	ft_count_words(char const *s, char c)
+{
+	int		i;
+	size_t	count;
+
+	if (!s)
+		return (0);
+	if (c == '\0')
+	{
+		if (*s == '\0')
+			return (0);
+		else
+			return (1);
+	}
+	i = 0;
+	count = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] != '\0')
+			count++;
+		while (s[i] && s[i] != c)
+			i++;
+	}
+	return (count);
+}
